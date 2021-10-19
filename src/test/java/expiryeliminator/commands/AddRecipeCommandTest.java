@@ -1,5 +1,6 @@
 package expiryeliminator.commands;
 
+import expiryeliminator.data.exception.NotFoundException;
 import expiryeliminator.util.TestUtil;
 import expiryeliminator.data.RecipeList;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddRecipeCommandTest {
     @Test
-    public void addRecipeCommand_duplicateRecipeName_recipeAlreadyExistsError() {
+    public void addRecipeCommand_duplicateRecipeName_recipeAlreadyExistsError() throws NotFoundException {
         RecipeList recipes = TestUtil.generateRecipeList();
         Command command = new AddRecipeCommand(TestUtil.EXAMPLE_RECIPE_NAME,
                 TestUtil.generateIngredientListForRecipe());
@@ -19,7 +20,7 @@ class AddRecipeCommandTest {
     }
 
     @Test
-    public void addRecipeCommand_correctInput_recipeAddedSuccessfully() {
+    public void addRecipeCommand_correctInput_recipeAddedSuccessfully() throws NotFoundException {
         RecipeList recipes = new RecipeList();
         Command command = new AddRecipeCommand(TestUtil.EXAMPLE_RECIPE_NAME,
                 TestUtil.generateIngredientListForRecipe());

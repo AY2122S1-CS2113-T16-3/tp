@@ -2,6 +2,7 @@ package expiryeliminator.commands;
 
 import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
+import expiryeliminator.data.exception.NotFoundException;
 import expiryeliminator.util.TestUtil;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ViewIngredientCommandTest {
 
     @Test
-    public void viewIngredientCommand_sampleIngredientList_expectRedAppleString() {
+    public void viewIngredientCommand_sampleIngredientList_expectRedAppleString() throws NotFoundException {
         IngredientList ingredientList = TestUtil.generateIngredientList();
         assert ingredientList != null;
         Command command = new ViewIngredientCommand("Red Apple");
