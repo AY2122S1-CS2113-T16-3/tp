@@ -4,12 +4,15 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
+import expiryeliminator.storage.saveList;
 
 /**
  * Decrement ingredient by a specified quantity.
  */
 public class DecrementCommand extends Command {
-    /** Unique word associated with the command. */
+    /**
+     * Unique word associated with the command.
+     */
     public static final String COMMAND_WORD = "decrement";
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + ": Decreases the quantity of a specified ingredient by a specified amount.\n"
@@ -28,7 +31,7 @@ public class DecrementCommand extends Command {
      * Initialises command and stores relevant parameters.
      *
      * @param ingredientName Name of ingredient to be incremented.
-     * @param quantity Quantity to increment by.
+     * @param quantity       Quantity to increment by.
      */
     public DecrementCommand(String ingredientName, int quantity) {
         assert ingredientName != null && !ingredientName.isBlank()
@@ -52,6 +55,7 @@ public class DecrementCommand extends Command {
             return String.format(MESSAGE_QUANTITY_NEGATIVE, ingredient.getQuantity(), quantity, ingredient);
         }
         ingredient.setQuantity(newQuantity);
+        saveList.saveIngredientListToFile(ingredients);
         return String.format(MESSAGE_INGREDIENT_DECREMENTED, quantity, ingredient);
     }
 }

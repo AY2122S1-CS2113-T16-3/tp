@@ -10,7 +10,7 @@ public class Recipe {
     /**
      * Initialises a recipe.
      *
-     * @param name The name of the recipe
+     * @param name        The name of the recipe
      * @param ingredients The ingredients for the recipe
      */
     public Recipe(String name, IngredientList ingredients) {
@@ -40,8 +40,10 @@ public class Recipe {
     public String toString() {
         StringBuilder ingredientsWithQuantities = new StringBuilder(name + "\n");
         for (Ingredient ingredient : ingredients.getIngredients()) {
-            ingredientsWithQuantities.append("- ").append(ingredient.getName())
-                    .append(" (qty: ").append(ingredient.getQuantity()).append(")\n");
+            if (ingredient.getQuantity() != 0) {
+                ingredientsWithQuantities.append("- ").append(ingredient.getName())
+                        .append(" (qty: ").append(ingredient.getQuantity()).append(")\n");
+            }
         }
         return ingredientsWithQuantities.toString();
     }

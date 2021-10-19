@@ -6,12 +6,15 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.DuplicateDataException;
+import expiryeliminator.storage.saveList;
 
 /**
  * Adds an ingredient, together with its associated quantity and expiry date.
  */
 public class AddIngredientCommand extends Command {
-    /** Unique word associated with the command. */
+    /**
+     * Unique word associated with the command.
+     */
     public static final String COMMAND_WORD = "add";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an ingredient to the ingredient repository. "
             + "Expiry date must be yyyy-mm-dd.\n"
@@ -29,8 +32,8 @@ public class AddIngredientCommand extends Command {
     /**
      * Instantiates ingredient with the specified name, quantity, and expiry date.
      *
-     * @param name Name of ingredient to be added.
-     * @param quantity Quantity of ingredient to be added.
+     * @param name       Name of ingredient to be added.
+     * @param quantity   Quantity of ingredient to be added.
      * @param expiryDate Expiry date of ingredient to be added.
      */
     public AddIngredientCommand(String name, int quantity, LocalDate expiryDate) {
@@ -45,6 +48,7 @@ public class AddIngredientCommand extends Command {
         assert ingredients != null : "Ingredient list cannot be null";
         try {
             ingredients.add(ingredient);
+            saveList.saveIngredientListToFile(ingredients);
         } catch (DuplicateDataException e) {
             return String.format(MESSAGE_INGREDIENT_ALREADY_EXISTS, ingredient.getName());
         }

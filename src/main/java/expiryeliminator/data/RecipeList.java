@@ -1,9 +1,10 @@
 package expiryeliminator.data;
 
-import java.util.HashMap;
-
 import expiryeliminator.data.exception.DuplicateDataException;
 import expiryeliminator.data.exception.NotFoundException;
+import expiryeliminator.storage.saveList;
+
+import java.util.HashMap;
 
 /**
  * Represents the recipe list and contains methods to add and remove recipes.
@@ -82,5 +83,25 @@ public class RecipeList {
             throw new NotFoundException();
         }
         return recipe;
+    }
+
+    public RecipeList updateRecipe(IngredientList ingredients, RecipeList recipes, Recipe recipe) throws NotFoundException {
+        Recipe matchedRecipe = recipes.findRecipe(recipe.getName());
+        boolean hasMatchingIngredient = false;
+        if (matchedRecipe != null) {
+            for (Ingredient targetIngredient : ingredients.getIngredients()) {
+                for (Ingredient originalIngredient : matchedRecipe.getIngredients().getIngredients()) {
+                    if (targetIngredient.getName().equals(originalIngredient.getName())) {
+                        hasMatchingIngredient = true;
+                        originalIngredient.setQuantity(targetIngredient.getQuantity());
+                    }
+                }
+                if (!hasMatchingIngredient) {
+                    return null;
+                }
+            }
+            recipes.recipes.put(recipe.getName(), matchedRecipe);
+            return recipes;
+        } else return null;
     }
 }

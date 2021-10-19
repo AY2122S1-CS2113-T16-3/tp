@@ -7,8 +7,11 @@ import expiryeliminator.commands.Command;
 import expiryeliminator.common.LogsCenter;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
+import expiryeliminator.data.exception.NotFoundException;
 import expiryeliminator.parser.Parser;
 import expiryeliminator.ui.Ui;
+import expiryeliminator.storage.saveList;
+import expiryeliminator.storage.loadList;
 
 /**
  * Entry point of the ExpiryEliminator application.
@@ -36,7 +39,9 @@ public class ExpiryEliminator {
     /**
      * Runs the program.
      */
-    public void run() {
+    public void run() throws NotFoundException {
+        loadList.loadRecipeList(recipes);
+        loadList.loadIngredientList(ingredients);
         ui.showGreeting();
         boolean isExit = false;
         while (!isExit) {
@@ -53,7 +58,7 @@ public class ExpiryEliminator {
     /**
      * Main entry-point for the ExpiryEliminator application.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotFoundException {
         logger.log(Level.INFO, "Starting program.");
         new ExpiryEliminator().run();
         logger.log(Level.INFO, "Exiting program.");

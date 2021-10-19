@@ -4,12 +4,15 @@ import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.DuplicateDataException;
+import expiryeliminator.storage.saveList;
 
 /**
  * Adds a recipe, together with the ingredients needed.
  */
 public class AddRecipeCommand extends Command {
-    /** Unique word associated with the command. */
+    /**
+     * Unique word associated with the command.
+     */
     public static final String COMMAND_WORD = "add recipe";
 
     public static final String MESSAGE_RECIPE_ADDED = "I've added this recipe:\n" + "%1$s"
@@ -33,6 +36,7 @@ public class AddRecipeCommand extends Command {
     public String execute(IngredientList ingredients, RecipeList recipes) {
         try {
             recipes.add(recipe);
+            saveList.saveRecipeListToFile(recipes);
         } catch (DuplicateDataException e) {
             return String.format(MESSAGE_RECIPE_ALREADY_EXISTS, recipe.getName());
         }

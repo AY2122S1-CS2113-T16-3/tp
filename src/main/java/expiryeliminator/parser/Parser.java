@@ -21,6 +21,7 @@ import expiryeliminator.commands.ListIngredientsExpiredCommand;
 import expiryeliminator.commands.ListRecipeCommand;
 import expiryeliminator.commands.ViewIngredientCommand;
 import expiryeliminator.commands.ViewRecipeCommand;
+import expiryeliminator.commands.UpdateRecipeCommand;
 import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.exception.DuplicateDataException;
@@ -78,36 +79,38 @@ public class Parser {
 
         try {
             switch (command) {
-            case AddIngredientCommand.COMMAND_WORD:
-                return prepareAddIngredient(args);
-            case DecrementCommand.COMMAND_WORD:
-                return prepareDecrementIngredient(args);
-            case IncrementCommand.COMMAND_WORD:
-                return prepareIncrementIngredient(args);
-            case DeleteIngredientCommand.COMMAND_WORD:
-                return prepareDeleteIngredient(args);
-            case ListCommand.COMMAND_WORD:
-                return new ListCommand();
-            case ListIngredientExpiringCommand.COMMAND_WORD:
-                return new ListIngredientExpiringCommand();
-            case ListIngredientsExpiredCommand.COMMAND_WORD:
-                return new ListIngredientsExpiredCommand();
-            case ViewIngredientCommand.COMMAND_WORD:
-                return prepareViewIngredient(args);
-            case AddRecipeCommand.COMMAND_WORD:
-                return prepareAddRecipe(args);
-            case DeleteRecipeCommand.COMMAND_WORD:
-                return prepareDeleteRecipe(args);
-            case ListRecipeCommand.COMMAND_WORD:
-                return new ListRecipeCommand();
-            case ViewRecipeCommand.COMMAND_WORD:
-                return prepareViewRecipe(args);
-            case ByeCommand.COMMAND_WORD:
-                return new ByeCommand();
-            case HelpCommand.COMMAND_WORD:
-                return new HelpCommand();
-            default:
-                return new IncorrectCommand(MESSAGE_UNRECOGNISED_COMMAND);
+                case AddIngredientCommand.COMMAND_WORD:
+                    return prepareAddIngredient(args);
+                case DecrementCommand.COMMAND_WORD:
+                    return prepareDecrementIngredient(args);
+                case IncrementCommand.COMMAND_WORD:
+                    return prepareIncrementIngredient(args);
+                case DeleteIngredientCommand.COMMAND_WORD:
+                    return prepareDeleteIngredient(args);
+                case ListCommand.COMMAND_WORD:
+                    return new ListCommand();
+                case ListIngredientExpiringCommand.COMMAND_WORD:
+                    return new ListIngredientExpiringCommand();
+                case ListIngredientsExpiredCommand.COMMAND_WORD:
+                    return new ListIngredientsExpiredCommand();
+                case ViewIngredientCommand.COMMAND_WORD:
+                    return prepareViewIngredient(args);
+                case AddRecipeCommand.COMMAND_WORD:
+                    return prepareAddRecipe(args);
+                case DeleteRecipeCommand.COMMAND_WORD:
+                    return prepareDeleteRecipe(args);
+                case ListRecipeCommand.COMMAND_WORD:
+                    return new ListRecipeCommand();
+                case ViewRecipeCommand.COMMAND_WORD:
+                    return prepareViewRecipe(args);
+                case UpdateRecipeCommand.COMMAND_WORD:
+                    return prepareUpdateRecipe(args);
+                case ByeCommand.COMMAND_WORD:
+                    return new ByeCommand();
+                case HelpCommand.COMMAND_WORD:
+                    return new HelpCommand();
+                default:
+                    return new IncorrectCommand(MESSAGE_UNRECOGNISED_COMMAND);
             }
         } catch (InvalidArgFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_ARGUMENT_FORMAT, e.getMessage()));
@@ -175,7 +178,7 @@ public class Parser {
      *
      * @param args Command arguments.
      * @return a AddRecipeCommand with the recipe name and the ingredients if successful
-     *         and an IncorrectCommand if not.
+     * and an IncorrectCommand if not.
      */
     private static Command prepareAddRecipe(String args) throws InvalidArgFormatException {
         final ArgParser argParser = new ArgParser(PREFIX_RECIPE, PREFIX_MULTIPLE_INGREDIENT, PREFIX_MULTIPLE_QUANTITY);
@@ -197,6 +200,28 @@ public class Parser {
         }
         assert !recipe.isBlank();
         return new AddRecipeCommand(recipe, ingredientList);
+    }
+
+    private static Command prepareUpdateRecipe(String args) throws InvalidArgFormatException {
+        final ArgParser argParser = new ArgParser(PREFIX_RECIPE, PREFIX_MULTIPLE_INGREDIENT, PREFIX_MULTIPLE_QUANTITY);
+        try {
+            argParser.parse(args);
+        } catch (InvalidPrefixException | MissingPrefixException | MultipleArgsException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateRecipeCommand.MESSAGE_USAGE));
+        }
+
+        final String recipe = new RecipeParser().parse(argParser.getSingleArg(PREFIX_RECIPE));
+        final ArrayList<String> ingredients =
+                new IngredientParser().parse(argParser.getArgList(PREFIX_MULTIPLE_INGREDIENT));
+        final ArrayList<Integer> quantities =
+                new QuantityParser().parse(argParser.getArgList(PREFIX_MULTIPLE_QUANTITY));
+        final IngredientList ingredientList = new IngredientList();
+        final IncorrectCommand error = addIngredients(ingredients, quantities, ingredientList);
+        if (error != null) {
+            return error;
+        }
+        assert !recipe.isBlank();
+        return new UpdateRecipeCommand(recipe, ingredientList);
     }
 
     /**
@@ -223,8 +248,8 @@ public class Parser {
      * Adds the ingredients into the ingredient list.
      *
      * @param ingredientNames Array of name of ingredients
-     * @param quantities Array of quantity of ingredients
-     * @param ingredients Ingredient list to store the ingredients
+     * @param quantities      Array of quantity of ingredients
+     * @param ingredients     Ingredient list to store the ingredients
      * @return null if there's no error and an IncorrectCommand if there is.
      */
     private static IncorrectCommand addIngredients(ArrayList<String> ingredientNames, ArrayList<Integer> quantities,
@@ -233,9 +258,6 @@ public class Parser {
             return new IncorrectCommand("Should have same number of ingredient names and quantities");
         }
         for (int i = 0; i < ingredientNames.size(); i++) {
-            if (quantities.get(i) == 0) {
-                return new IncorrectCommand("Quantity of ingredients for recipe cannot be zero.");
-            }
             Ingredient ingredient = new Ingredient(ingredientNames.get(i), quantities.get(i), null);
             assert !ingredientNames.get(i).isBlank();
             assert quantities.get(i) != null && quantities.get(i) != 0;

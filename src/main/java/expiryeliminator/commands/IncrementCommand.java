@@ -4,12 +4,15 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
+import expiryeliminator.storage.saveList;
 
 /**
  * Increment ingredient by a specified quantity.
  */
 public class IncrementCommand extends Command {
-    /** Unique word associated with the command. */
+    /**
+     * Unique word associated with the command.
+     */
     public static final String COMMAND_WORD = "increment";
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + ": Increases the quantity of a specified ingredient by a specified amount.\n"
@@ -26,7 +29,7 @@ public class IncrementCommand extends Command {
      * Initialises command and stores relevant parameters.
      *
      * @param ingredientName Name of ingredient to be incremented.
-     * @param quantity Quantity to increment by.
+     * @param quantity       Quantity to increment by.
      */
     public IncrementCommand(String ingredientName, int quantity) {
         assert ingredientName != null && !ingredientName.isBlank()
@@ -46,6 +49,7 @@ public class IncrementCommand extends Command {
             return MESSAGE_INGREDIENT_NOT_FOUND;
         }
         ingredient.setQuantity(ingredient.getQuantity() + quantity);
+        saveList.saveIngredientListToFile(ingredients);
         return String.format(MESSAGE_INGREDIENT_INCREMENTED, quantity, ingredient);
     }
 }

@@ -4,12 +4,15 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
+import expiryeliminator.storage.saveList;
 
 /**
  * Deletes an ingredient.
  */
 public class DeleteIngredientCommand extends Command {
-    /** Unique word associated with the command. */
+    /**
+     * Unique word associated with the command.
+     */
     public static final String COMMAND_WORD = "delete";
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + ": Deletes an ingredient from the ingredient repository.\n"
@@ -39,6 +42,7 @@ public class DeleteIngredientCommand extends Command {
         final Ingredient ingredient;
         try {
             ingredient = ingredients.remove(ingredientName);
+            saveList.saveIngredientListToFile(ingredients);
         } catch (NotFoundException e) {
             return MESSAGE_INGREDIENT_NOT_FOUND;
         }
