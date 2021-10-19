@@ -52,13 +52,6 @@ class ParserTest {
     }
 
     @Test
-    public void prepareAddRecipe_ingredientWithZeroQuantity_ErrorMessage() throws NotFoundException {
-        String test = "add recipe r/Chicken Soup i/chicken q/0 i/salt q/20";
-        assertEquals("Quantity of ingredients for recipe cannot be zero.",
-                parseCommand(test).execute(null, null));
-    }
-
-    @Test
     public void prepareDeleteRecipe_correctInput_DeleteRecipeCommand() {
         String test = "delete recipe r/Chicken Soup";
         assertTrue(parseCommand(test) instanceof DeleteRecipeCommand);
