@@ -4,7 +4,7 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
-import expiryeliminator.storage.saveList;
+import expiryeliminator.storage.SaveList;
 
 /**
  * Decrement ingredient by a specified quantity.
@@ -55,7 +55,7 @@ public class DecrementCommand extends Command {
             return String.format(MESSAGE_QUANTITY_NEGATIVE, ingredient.getQuantity(), quantity, ingredient);
         }
         ingredient.setQuantity(newQuantity);
-        saveList.saveIngredientListToFile(ingredients);
+        SaveList.saveIngredientListToFile(ingredients);
         return String.format(MESSAGE_INGREDIENT_DECREMENTED, quantity, ingredient);
     }
 }

@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class saveList {
+public class SaveList {
     /**
      * This function is to save tasks to a specific file path
      */
@@ -23,7 +23,7 @@ public class saveList {
             String textToAppend = recipes.getWholeRecipeList();
             appendToFile(pathName + fileName, textToAppend);
         } catch (IOException e) {
-            System.out.println("An IO error has occurred: " + e.getMessage());
+            System.out.println("An recipeList IO error has occurred: " + e.getMessage());
         }
     }
 
@@ -35,7 +35,7 @@ public class saveList {
             String textToAppend = ingredients.printWholeList();
             appendToFile(pathName + fileName, textToAppend);
         } catch (IOException e) {
-            System.out.println("An IO error has occurred: " + e.getMessage());
+            System.out.println("An IngredientList IO error has occurred: " + e.getMessage());
         }
     }
 
@@ -45,14 +45,10 @@ public class saveList {
             FileWriter fw = new FileWriter(file);
             fw.write("");
         } catch (IOException e) {
-            System.out.println("An IO error has occurred: " + e.getMessage());
+            System.out.println("An flush IO error has occurred: " + e.getMessage());
         }
     }
 
-    /**
-     * @param pathName pathName is the relative path without the file name
-     * @param fileName only the file name
-     */
     public static void createFileOrFolder(String pathName, String fileName) {
         try {
             Path path = Paths.get(pathName);
@@ -60,16 +56,12 @@ public class saveList {
             Path file = Paths.get(pathName + fileName);
             Files.createFile(file);
         } catch (FileAlreadyExistsException ignored) {
+            System.out.println("");
         } catch (IOException e) {
-            System.out.println("An IO error has occurred: " + e.getMessage());
+            System.out.println("An createFile IO error has occurred: " + e.getMessage());
         }
     }
 
-    /**
-     * @param filePath     the whole path with both relative path and file name
-     * @param textToAppend the text to be appended to the end of the file
-     * @throws IOException exception when there is an I/O error
-     */
     public static void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true);
         fw.write(textToAppend);

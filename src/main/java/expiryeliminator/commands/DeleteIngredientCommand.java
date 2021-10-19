@@ -4,7 +4,7 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
-import expiryeliminator.storage.saveList;
+import expiryeliminator.storage.SaveList;
 
 /**
  * Deletes an ingredient.
@@ -42,7 +42,7 @@ public class DeleteIngredientCommand extends Command {
         final Ingredient ingredient;
         try {
             ingredient = ingredients.remove(ingredientName);
-            saveList.saveIngredientListToFile(ingredients);
+            SaveList.saveIngredientListToFile(ingredients);
         } catch (NotFoundException e) {
             return MESSAGE_INGREDIENT_NOT_FOUND;
         }

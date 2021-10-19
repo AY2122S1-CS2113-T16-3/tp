@@ -5,9 +5,7 @@ import expiryeliminator.data.Ingredient;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
-import expiryeliminator.storage.saveList;
-
-import java.lang.Object;
+import expiryeliminator.storage.SaveList;
 
 public class UpdateRecipeCommand extends Command {
     /**
@@ -36,9 +34,11 @@ public class UpdateRecipeCommand extends Command {
         try {
             recipes = recipes.updateRecipe(recipe.getIngredients(), recipes, recipe);
             if (recipes != null) {
-                saveList.saveRecipeListToFile(recipes);
+                SaveList.saveRecipeListToFile(recipes);
                 return String.format(MESSAGE_RECIPE_UPDATED, recipe);
-            } else return String.format(RECIPE_UPDATE_FAIL, recipe);
+            } else {
+                return String.format(RECIPE_UPDATE_FAIL, recipe);
+            }
         } catch (NotFoundException e) {
             return String.format(RECIPE_UPDATE_FAIL, recipe);
         }

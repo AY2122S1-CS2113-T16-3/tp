@@ -79,38 +79,38 @@ public class Parser {
 
         try {
             switch (command) {
-                case AddIngredientCommand.COMMAND_WORD:
-                    return prepareAddIngredient(args);
-                case DecrementCommand.COMMAND_WORD:
-                    return prepareDecrementIngredient(args);
-                case IncrementCommand.COMMAND_WORD:
-                    return prepareIncrementIngredient(args);
-                case DeleteIngredientCommand.COMMAND_WORD:
-                    return prepareDeleteIngredient(args);
-                case ListCommand.COMMAND_WORD:
-                    return new ListCommand();
-                case ListIngredientExpiringCommand.COMMAND_WORD:
-                    return new ListIngredientExpiringCommand();
-                case ListIngredientsExpiredCommand.COMMAND_WORD:
-                    return new ListIngredientsExpiredCommand();
-                case ViewIngredientCommand.COMMAND_WORD:
-                    return prepareViewIngredient(args);
-                case AddRecipeCommand.COMMAND_WORD:
-                    return prepareAddRecipe(args);
-                case DeleteRecipeCommand.COMMAND_WORD:
-                    return prepareDeleteRecipe(args);
-                case ListRecipeCommand.COMMAND_WORD:
-                    return new ListRecipeCommand();
-                case ViewRecipeCommand.COMMAND_WORD:
-                    return prepareViewRecipe(args);
-                case UpdateRecipeCommand.COMMAND_WORD:
-                    return prepareUpdateRecipe(args);
-                case ByeCommand.COMMAND_WORD:
-                    return new ByeCommand();
-                case HelpCommand.COMMAND_WORD:
-                    return new HelpCommand();
-                default:
-                    return new IncorrectCommand(MESSAGE_UNRECOGNISED_COMMAND);
+            case AddIngredientCommand.COMMAND_WORD:
+                return prepareAddIngredient(args);
+            case DecrementCommand.COMMAND_WORD:
+                return prepareDecrementIngredient(args);
+            case IncrementCommand.COMMAND_WORD:
+                return prepareIncrementIngredient(args);
+            case DeleteIngredientCommand.COMMAND_WORD:
+                return prepareDeleteIngredient(args);
+            case ListCommand.COMMAND_WORD:
+                return new ListCommand();
+            case ListIngredientExpiringCommand.COMMAND_WORD:
+                return new ListIngredientExpiringCommand();
+            case ListIngredientsExpiredCommand.COMMAND_WORD:
+                return new ListIngredientsExpiredCommand();
+            case ViewIngredientCommand.COMMAND_WORD:
+                return prepareViewIngredient(args);
+            case AddRecipeCommand.COMMAND_WORD:
+                return prepareAddRecipe(args);
+            case DeleteRecipeCommand.COMMAND_WORD:
+                return prepareDeleteRecipe(args);
+            case ListRecipeCommand.COMMAND_WORD:
+                return new ListRecipeCommand();
+            case ViewRecipeCommand.COMMAND_WORD:
+                return prepareViewRecipe(args);
+            case UpdateRecipeCommand.COMMAND_WORD:
+                return prepareUpdateRecipe(args);
+            case ByeCommand.COMMAND_WORD:
+                return new ByeCommand();
+            case HelpCommand.COMMAND_WORD:
+                return new HelpCommand();
+            default:
+                return new IncorrectCommand(MESSAGE_UNRECOGNISED_COMMAND);
             }
         } catch (InvalidArgFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_ARGUMENT_FORMAT, e.getMessage()));
@@ -177,8 +177,7 @@ public class Parser {
      * Creates a AddRecipeCommand from the inputs.
      *
      * @param args Command arguments.
-     * @return a AddRecipeCommand with the recipe name and the ingredients if successful
-     * and an IncorrectCommand if not.
+     * @return a AddRecipeCommand with the recipe name and ingredients if successful and an IncorrectCommand if not.
      */
     private static Command prepareAddRecipe(String args) throws InvalidArgFormatException {
         final ArgParser argParser = new ArgParser(PREFIX_RECIPE, PREFIX_MULTIPLE_INGREDIENT, PREFIX_MULTIPLE_QUANTITY);
@@ -207,7 +206,8 @@ public class Parser {
         try {
             argParser.parse(args);
         } catch (InvalidPrefixException | MissingPrefixException | MultipleArgsException e) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateRecipeCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    UpdateRecipeCommand.MESSAGE_USAGE));
         }
 
         final String recipe = new RecipeParser().parse(argParser.getSingleArg(PREFIX_RECIPE));

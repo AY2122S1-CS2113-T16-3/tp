@@ -5,15 +5,12 @@ import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.DuplicateDataException;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class loadList {
+public class LoadList {
     public static void loadRecipeList(RecipeList recipes) {
         String pathName = "./data/";
         String fileName = "recipeList.txt";
@@ -56,8 +53,10 @@ public class loadList {
                     }
                 }
             }
-        } catch (FileNotFoundException | DuplicateDataException e) {
-            saveList.createFileOrFolder(pathName, fileName);
+        } catch (DuplicateDataException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            SaveList.createFileOrFolder(pathName, fileName);
         }
     }
 
@@ -84,7 +83,7 @@ public class loadList {
         } catch (DuplicateDataException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
-            saveList.createFileOrFolder(pathName, fileName);
+            SaveList.createFileOrFolder(pathName, fileName);
         }
     }
 }

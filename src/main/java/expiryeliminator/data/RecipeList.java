@@ -2,7 +2,6 @@ package expiryeliminator.data;
 
 import expiryeliminator.data.exception.DuplicateDataException;
 import expiryeliminator.data.exception.NotFoundException;
-import expiryeliminator.storage.saveList;
 
 import java.util.HashMap;
 
@@ -85,7 +84,8 @@ public class RecipeList {
         return recipe;
     }
 
-    public RecipeList updateRecipe(IngredientList ingredients, RecipeList recipes, Recipe recipe) throws NotFoundException {
+    public RecipeList updateRecipe(IngredientList ingredients, RecipeList recipes, Recipe recipe)
+            throws NotFoundException {
         Recipe matchedRecipe = recipes.findRecipe(recipe.getName());
         boolean hasMatchingIngredient = false;
         if (matchedRecipe != null) {
@@ -102,6 +102,8 @@ public class RecipeList {
             }
             recipes.recipes.put(recipe.getName(), matchedRecipe);
             return recipes;
-        } else return null;
+        } else {
+            return null;
+        }
     }
 }

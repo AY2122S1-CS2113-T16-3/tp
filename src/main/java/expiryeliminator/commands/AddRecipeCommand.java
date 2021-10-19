@@ -4,7 +4,7 @@ import expiryeliminator.data.IngredientList;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.DuplicateDataException;
-import expiryeliminator.storage.saveList;
+import expiryeliminator.storage.SaveList;
 
 /**
  * Adds a recipe, together with the ingredients needed.
@@ -36,7 +36,7 @@ public class AddRecipeCommand extends Command {
     public String execute(IngredientList ingredients, RecipeList recipes) {
         try {
             recipes.add(recipe);
-            saveList.saveRecipeListToFile(recipes);
+            SaveList.saveRecipeListToFile(recipes);
         } catch (DuplicateDataException e) {
             return String.format(MESSAGE_RECIPE_ALREADY_EXISTS, recipe.getName());
         }

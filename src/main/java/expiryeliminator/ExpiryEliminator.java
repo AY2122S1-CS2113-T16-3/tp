@@ -10,8 +10,8 @@ import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.NotFoundException;
 import expiryeliminator.parser.Parser;
 import expiryeliminator.ui.Ui;
-import expiryeliminator.storage.saveList;
-import expiryeliminator.storage.loadList;
+import expiryeliminator.storage.SaveList;
+import expiryeliminator.storage.LoadList;
 
 /**
  * Entry point of the ExpiryEliminator application.
@@ -40,8 +40,8 @@ public class ExpiryEliminator {
      * Runs the program.
      */
     public void run() throws NotFoundException {
-        loadList.loadRecipeList(recipes);
-        loadList.loadIngredientList(ingredients);
+        LoadList.loadRecipeList(recipes);
+        LoadList.loadIngredientList(ingredients);
         ui.showGreeting();
         boolean isExit = false;
         while (!isExit) {
