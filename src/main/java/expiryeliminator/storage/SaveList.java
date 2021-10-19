@@ -12,9 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class SaveList {
-    /**
-     * This function is to save tasks to a specific file path
-     */
+
     public static void saveRecipeListToFile(RecipeList recipes) {
         String pathName = "./data/";
         String fileName = "recipeList.txt";
