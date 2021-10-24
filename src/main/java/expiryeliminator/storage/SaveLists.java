@@ -1,4 +1,4 @@
-package expiryeliminator.Storage;
+package expiryeliminator.storage;
 
 import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.RecipeList;

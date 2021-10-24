@@ -1,6 +1,6 @@
 package expiryeliminator.commands;
 
-import expiryeliminator.Storage.SaveLists;
+import expiryeliminator.storage.SaveLists;
 import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.IngredientStorage;
 import expiryeliminator.data.RecipeList;

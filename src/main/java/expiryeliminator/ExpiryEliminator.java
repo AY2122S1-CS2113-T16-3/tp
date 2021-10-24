@@ -6,7 +6,7 @@ import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.parser.Parser;
 import expiryeliminator.ui.Ui;
-import expiryeliminator.Storage.LoadLists;
+import expiryeliminator.storage.LoadLists;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
