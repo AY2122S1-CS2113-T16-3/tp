@@ -2,6 +2,7 @@ package expiryeliminator.commands;
 
 import java.util.ArrayList;
 
+import expiryeliminator.Storage.SaveLists;
 import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
@@ -67,6 +68,7 @@ public class AddRecipeCommand extends Command {
 
         try {
             recipes.add(recipe);
+            SaveLists.saveRecipeListToFile(recipes);
         } catch (DuplicateDataException e) {
             return String.format(MESSAGE_RECIPE_ALREADY_EXISTS, name);
         }

@@ -1,5 +1,6 @@
 package expiryeliminator.commands;
 
+import expiryeliminator.Storage.SaveLists;
 import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.Recipe;
 import expiryeliminator.data.RecipeList;
@@ -29,6 +30,7 @@ public class DeleteRecipeCommand extends Command {
     public String execute(IngredientRepository ingredients, RecipeList recipes) {
         try {
             Recipe deletedRecipe = recipes.remove(recipeName);
+            SaveLists.saveRecipeListToFile(recipes);
             return String.format(MESSAGE_RECIPE_DELETED, deletedRecipe, recipes.size());
         } catch (NotFoundException e) {
             return MESSAGE_RECIPE_NOT_FOUND;

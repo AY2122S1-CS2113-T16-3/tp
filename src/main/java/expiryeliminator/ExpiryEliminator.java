@@ -6,6 +6,7 @@ import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.parser.Parser;
 import expiryeliminator.ui.Ui;
+import expiryeliminator.Storage.LoadLists;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +39,8 @@ public class ExpiryEliminator {
      */
     public void run() {
         ui.showGreeting();
+        LoadLists.loadRecipeList(recipes);
+        LoadLists.loadIngredientRepo(ingredients);
         boolean isExit = false;
         while (!isExit) {
             final String userInput = ui.getUserInput();

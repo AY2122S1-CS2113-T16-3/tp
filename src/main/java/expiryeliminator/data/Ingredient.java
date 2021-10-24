@@ -23,7 +23,7 @@ public class Ingredient {
      * @param name The name of the ingredient.
      * @param unit The unit for the ingredient.
      */
-    Ingredient(String name, String unit) {
+    public Ingredient(String name, String unit) {
         this(name);
         this.unit = unit;
     }

@@ -9,7 +9,7 @@ import expiryeliminator.data.exception.IllegalValueException;
  * Represents a recipe.
  */
 public class Recipe {
-    private final String name;
+    private String name;
     private final TreeMap<String, IngredientQuantity> ingredientQuantities = new TreeMap<>();
 
     /**
@@ -30,6 +30,10 @@ public class Recipe {
         return name;
     }
 
+    public void setName(String inputName) {
+        name = inputName;
+    }
+
 
     /**
      * Returns the ingredients and the respective quantities of the recipe.
@@ -38,6 +42,10 @@ public class Recipe {
      */
     public TreeMap<String, IngredientQuantity> getIngredientQuantities() {
         return ingredientQuantities;
+    }
+
+    public void setIngredientQuantities(String ingredientName, IngredientQuantity ingredientQuantity) {
+        ingredientQuantities.put(ingredientName, ingredientQuantity);
     }
 
     /**

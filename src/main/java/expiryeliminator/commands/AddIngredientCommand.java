@@ -6,6 +6,7 @@ import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.IngredientStorage;
 import expiryeliminator.data.RecipeList;
 import expiryeliminator.data.exception.DuplicateDataException;
+import expiryeliminator.Storage.SaveLists;
 
 /**
  * Adds an ingredient, together with its associated quantity and expiry date.
@@ -70,6 +71,7 @@ public class AddIngredientCommand extends Command {
             } else {
                 ingredientStorage = ingredients.add(name, unit, quantity, expiryDate);
             }
+            SaveLists.saveIngredientRepoToFile(ingredients);
         } catch (DuplicateDataException e) {
             return String.format(MESSAGE_INGREDIENT_ALREADY_EXISTS, name);
         }

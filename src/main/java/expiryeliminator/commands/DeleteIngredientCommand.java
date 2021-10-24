@@ -1,5 +1,6 @@
 package expiryeliminator.commands;
 
+import expiryeliminator.Storage.SaveLists;
 import expiryeliminator.data.IngredientRepository;
 import expiryeliminator.data.IngredientStorage;
 import expiryeliminator.data.RecipeList;
@@ -41,6 +42,7 @@ public class DeleteIngredientCommand extends Command {
         final IngredientStorage ingredient;
         try {
             ingredient = ingredients.remove(ingredientName);
+            SaveLists.saveIngredientRepoToFile(ingredients);
         } catch (NotFoundException e) {
             return MESSAGE_INGREDIENT_NOT_FOUND;
         }
