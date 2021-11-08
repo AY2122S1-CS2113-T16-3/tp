@@ -15,7 +15,7 @@ class MultipleArgPrefix extends Prefix {
     +MultipleArgPrefix(singleArgPrefix: SingleArgPrefix)
 }
 class OptionalArgPrefix extends SingleArgPrefix {
-    +OptionalArgPrefix(prefix : String)
+    +OptionalArgPrefix(singleArgPrefix: SingleArgPrefix)
 }
 
 class ArgsParser {
@@ -32,7 +32,7 @@ ArgsParser ..> Prefix
 ArgsParser ..> SingleArgPrefix
 ArgsParser ..> MultipleArgPrefix
 Parser ..> ArgsParser
-Parser "1" --> "5" SingleArgPrefix
+Parser "1" --> "4" SingleArgPrefix
 Parser "1" --> "3  " MultipleArgPrefix
 Parser "    1" --> "1 " OptionalArgPrefix
 MultipleArgPrefix .> SingleArgPrefix
@@ -50,7 +50,6 @@ PREFIX_RECIPE
 PREFIX_INGREDIENT
 PREFIX_QUANTITY
 PREFIX_EXPIRY
-PREFIX_UNIT
 end note
 
 note right of OptionalArgPrefix
